@@ -3,6 +3,19 @@ using Microsoft.EntityFrameworkCore;
 using BooksManagementApi.Models;
 using BooksManagementApi.Services;
 
+
+
+// ----Test ImaggaService----
+var imaggaService = new ImaggaService();
+var tags = await imaggaService.GetTags("https://www.imagga.com/static/images/tagging/wind-farm-538576_640.jpg");
+foreach (var tag in tags)
+{
+    Console.WriteLine($"{tag.Tag} - {tag.Confidence}");
+}
+// ----/Test ImaggaService----
+
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -30,3 +43,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+

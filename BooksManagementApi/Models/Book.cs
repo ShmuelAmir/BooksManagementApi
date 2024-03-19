@@ -8,5 +8,6 @@
         public int Year { get; set; }
         public string Genre { get; set; } = string.Empty;
         public string Image { get; set; } = string.Empty;
+        public List<ImaggaTag>? Tags { get; set; }
     }
 }
