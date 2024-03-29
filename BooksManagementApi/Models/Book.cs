@@ -9,5 +9,6 @@
         public string Cover { get; set; } = string.Empty;
         public int Pages { get; set; }
         public float Rating { get; set; }
+        public List<ImaggaTag>? Tags { get; set; }
     }
 }
