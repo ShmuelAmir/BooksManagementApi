@@ -6,15 +6,16 @@ using BooksManagementApi.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddDbContext<BookContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Dev")));
+
+builder.Services.AddScoped<BookService>();
+builder.Services.AddScoped<OpenLibraryService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-builder.Services.AddScoped<BookService>();
-builder.Services.AddDbContext<BookContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 

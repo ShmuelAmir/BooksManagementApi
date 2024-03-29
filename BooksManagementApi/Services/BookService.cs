@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
 using BooksManagementApi.Models;
 
 namespace BooksManagementApi.Services
@@ -42,9 +41,10 @@ namespace BooksManagementApi.Services
 
             dbBook.Title = book.Title;
             dbBook.Author = book.Author;
-            dbBook.Year = book.Year;
-            dbBook.Genre = book.Genre;
-            dbBook.Image = book.Image;
+            dbBook.PublishYear = book.PublishYear;
+            dbBook.Cover = book.Cover;
+            dbBook.Pages = book.Pages;
+            dbBook.Rating = book.Rating;
 
             await _context.SaveChangesAsync();
         }

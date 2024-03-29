@@ -2,11 +2,12 @@
 {
     public class Book
     {
-        public int ISBN { get; set; }
-        public required string Title { get; set; }
+        public string ISBN { get; set; } = string.Empty;
+        public string Title { get; set; } = string.Empty;
         public string Author { get; set; } = string.Empty;
-        public int Year { get; set; }
-        public string Genre { get; set; } = string.Empty;
-        public string Image { get; set; } = string.Empty;
+        public int PublishYear { get; set; }
+        public string Cover { get; set; } = string.Empty;
+        public int Pages { get; set; }
+        public float Rating { get; set; }
     }
 }
