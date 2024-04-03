@@ -4,15 +4,17 @@ using BooksManagementApi.Models;
 
 namespace BooksManagementApi.Services
 {
-    public class ImaggaService
+    public class ImaggaService(IConfiguration configuration)
     {
+        private readonly IConfiguration _configuration = configuration;
+
         public async Task<List<ImaggaTag>> GetTags(string imageUrl)
         {
             var client = new RestClient("https://api.imagga.com/v2/");
             var request = new RestRequest("tags", Method.Get);
             request.AddParameter("image_url", imageUrl);
 
-            var credentials = "acc_c61058d2a32b21c:dffc59bad8bfc207642b3a97bba7b7ff";
+            var credentials = _configuration["Imagga:ApiKey"] + ":" + _configuration["Imagga:ApiSecret"];
             request.AddHeader("Authorization", "Basic " + Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(credentials)));
                
             RestResponse response = await client.ExecuteAsync(request);

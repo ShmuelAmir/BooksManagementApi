@@ -39,6 +39,7 @@ namespace BooksManagementApi.Services
                 throw new ArgumentException("Book with the specified ISBN not found.");
             }
 
+            dbBook.ISBN = book.ISBN;
             dbBook.Title = book.Title;
             dbBook.Author = book.Author;
             dbBook.PublishYear = book.PublishYear;
