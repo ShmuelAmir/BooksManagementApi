@@ -1,19 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BooksManagementApi.Models;
-using BooksManagementApi.Services;
+using BooksManagementApi.Commands;
+using BooksManagementApi.Queries;
 
 namespace BooksManagementApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BookController(BookService service) : ControllerBase
+    public class BookController(BookCommands commands, BookQueries queries) : ControllerBase
     {
-        private readonly BookService _service = service;
+        private readonly BookCommands _commands = commands;
+        private readonly BookQueries _queries = queries;
 
         [HttpGet]
         public async Task<ActionResult<List<Book>>> GetBooks()
         {
-            var books = await _service.GetBooksAsync();
+            var books = await _queries.GetBooksAsync();
 
             return Ok(books);
         }
@@ -23,7 +25,7 @@ namespace BooksManagementApi.Controllers
         {
             try
             {
-                var book = await _service.GetBookByIsbnAsync(id);
+                var book = await _queries.GetBookByIsbnAsync(id);
                 return Ok(book);
             }
             catch (ArgumentException e)
@@ -37,7 +39,7 @@ namespace BooksManagementApi.Controllers
         {
             try
             {
-                await _service.AddBookAsync(book);
+                await _commands.AddBookAsync(book);
                 return Ok();
             }
             catch (ArgumentException e)
@@ -51,7 +53,7 @@ namespace BooksManagementApi.Controllers
         {
             try
             {
-                await _service.UpdateBookAsync(id, book);
+                await _commands.UpdateBookAsync(id, book);
                 return Ok();
             }
             catch (ArgumentException e)
@@ -65,7 +67,7 @@ namespace BooksManagementApi.Controllers
         {
             try
             {
-                await _service.DeleteBookAsync(id);
+                await _commands.DeleteBookAsync(id);
                 return Ok();
             }
             catch (ArgumentException e)

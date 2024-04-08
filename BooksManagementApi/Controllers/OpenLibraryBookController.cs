@@ -1,14 +1,14 @@
 ﻿using BooksManagementApi.Models;
-using BooksManagementApi.Services;
+using BooksManagementApi.Queries;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BooksManagementApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OpenLibraryBookController(OpenLibraryService service) : ControllerBase
+    public class OpenLibraryBookController(OpenLibraryQueries queries) : ControllerBase
     {
-        private readonly OpenLibraryService _service = service;
+        private readonly OpenLibraryQueries _queries = queries;
 
         [HttpGet("{searchTerm}")]
         public async Task<ActionResult<List<Book>>> GetBooks(string searchTerm)
@@ -20,7 +20,7 @@ namespace BooksManagementApi.Controllers
 
             try
             {
-                var books = await _service.GetBooksBySearchParamsAsync(searchTerm);
+                var books = await _queries.GetBooksBySearchParamsAsync(searchTerm);
                 return Ok(books);
             }
             catch (ArgumentException e)

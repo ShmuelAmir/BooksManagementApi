@@ -1,15 +1,16 @@
 using Microsoft.EntityFrameworkCore;
 using BooksManagementApi.Models;
-using BooksManagementApi.Services;
+using BooksManagementApi.Commands;
+using BooksManagementApi.Queries;
 
-// ----Test ImaggaService----
-//var imaggaService = new ImaggaService();
-//var tags = await imaggaService.GetTags("https://www.imagga.com/static/images/tagging/wind-farm-538576_640.jpg");
+// ----Test ImaggaQueries----
+//var imaggaQueries = new ImaggaQueries();
+//var tags = await imaggaQueries.GetTags("https://www.imagga.com/static/images/tagging/wind-farm-538576_640.jpg");
 //foreach (var tag in tags)
 //{
 //    Console.WriteLine($"{tag.Tag} - {tag.Confidence}");
 //}
-// ----/Test ImaggaService----
+// ----/Test ImaggaQueries----
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,9 +18,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<BookContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Dev")));
 
-builder.Services.AddScoped<BookService>();
-builder.Services.AddScoped<OpenLibraryService>();
-builder.Services.AddScoped<ImaggaService>();
+builder.Services.AddScoped<BookCommands>();
+builder.Services.AddScoped<BookQueries>();
+builder.Services.AddScoped<OpenLibraryQueries>();
+builder.Services.AddScoped<ImaggaQueries>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

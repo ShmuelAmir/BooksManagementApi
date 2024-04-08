@@ -1,10 +1,11 @@
-﻿using BooksManagementApi.Models;
+using BooksManagementApi.Models;
 using BooksManagementApi.Clients;
 
-namespace BooksManagementApi.Services
+namespace BooksManagementApi.Queries
 {
-    public class OpenLibraryService
+    public class OpenLibraryQueries
     {
+        const int MAX_BOOKS = 10;
         readonly OpenLibraryClient _openLibraryClient = new OpenLibraryClient();
 
         public async Task<List<Book>> GetBooksBySearchParamsAsync(string searchTerm)
@@ -17,25 +18,12 @@ namespace BooksManagementApi.Services
             }
 
             return response.docs
-                .Where(IsValidBook)
-                .Where(IsEnglishBook)
+                .Where(olb => olb.IsValidBook())
+                .Where(olb => olb.IsEnglishBook())
                 .DistinctBy(olb => olb.title)
-                .Take(10)
+                .Take(MAX_BOOKS)
                 .Select(OpenLibraryBookToDBBookConvertor)
                 .ToList();
-        }
-
-        private bool IsValidBook(OpenLibraryBook openLibBook)
-        {
-            return openLibBook.isbn != null
-                && openLibBook.author_name != null
-                && openLibBook.isbn.Length > 0
-                && openLibBook.author_name.Length > 0;
-        }
-
-        private bool IsEnglishBook(OpenLibraryBook openLibBook)
-        {
-            return openLibBook.language != null && openLibBook.language.Contains("eng");
         }
 
         private Book OpenLibraryBookToDBBookConvertor(OpenLibraryBook openLibBook)

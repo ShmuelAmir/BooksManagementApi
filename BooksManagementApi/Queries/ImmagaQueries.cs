@@ -1,10 +1,10 @@
-﻿using RestSharp;
+using RestSharp;
 using Newtonsoft.Json.Linq;
 using BooksManagementApi.Models;
 
-namespace BooksManagementApi.Services
+namespace BooksManagementApi.Queries
 {
-    public class ImaggaService(IConfiguration configuration)
+    public class ImaggaQueries(IConfiguration configuration)
     {
         private readonly IConfiguration _configuration = configuration;
 
