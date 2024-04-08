@@ -7,9 +7,9 @@ namespace BooksManagementApi.Clients
     {
         private readonly RestClient _client = new RestClient("https://openlibrary.org");
 
-        public async Task<OpenLibraryBookResponse> GetBooksBySearchParamsAsync(string searchTerm)
+        public async Task<OpenLibraryBookResponse> GetBooks(string endpoint)
         {
-            var response = await _client.GetJsonAsync<OpenLibraryBookResponse>($"/search.json?q={searchTerm}");
+            var response = await _client.GetJsonAsync<OpenLibraryBookResponse>(endpoint);
 
             if (response == null)
             {

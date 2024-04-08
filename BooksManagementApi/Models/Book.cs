@@ -10,7 +10,8 @@
         public string Cover { get; set; } = string.Empty;
         public int Pages { get; set; }
         public float Rating { get; set; }
-        public List<ImaggaTag> Tags { get; } = [];
-        public List<Comment> Comments { get; } = [];
+
+        public virtual List<ImaggaTag> Tags { get; } = [];
+        public virtual List<Comment> Comments { get; } = [];
     }
 }

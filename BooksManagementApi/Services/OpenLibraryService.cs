@@ -9,7 +9,7 @@ namespace BooksManagementApi.Services
 
         public async Task<List<Book>> GetBooksBySearchParamsAsync(string searchTerm)
         {
-            var response = await _openLibraryClient.GetBooksBySearchParamsAsync(searchTerm);
+            var response = await _openLibraryClient.GetBooks($"/search.json?q={searchTerm}");
 
             if (response.docs == null)
             {
@@ -18,6 +18,7 @@ namespace BooksManagementApi.Services
 
             return response.docs
                 .Where(IsValidBook)
+                .Where(IsEnglishBook)
                 .DistinctBy(olb => olb.title)
                 .Take(10)
                 .Select(OpenLibraryBookToDBBookConvertor)
@@ -26,10 +27,15 @@ namespace BooksManagementApi.Services
 
         private bool IsValidBook(OpenLibraryBook openLibBook)
         {
-            return openLibBook.isbn != null 
-                && openLibBook.author_name != null 
-                && openLibBook.isbn.Length > 0 
+            return openLibBook.isbn != null
+                && openLibBook.author_name != null
+                && openLibBook.isbn.Length > 0
                 && openLibBook.author_name.Length > 0;
+        }
+
+        private bool IsEnglishBook(OpenLibraryBook openLibBook)
+        {
+            return openLibBook.language != null && openLibBook.language.Contains("eng");
         }
 
         private Book OpenLibraryBookToDBBookConvertor(OpenLibraryBook openLibBook)
@@ -45,6 +51,5 @@ namespace BooksManagementApi.Services
                 Rating = openLibBook.ratings_average
             };
         }
-
     }
 }

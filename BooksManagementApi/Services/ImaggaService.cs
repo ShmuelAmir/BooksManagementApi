@@ -16,7 +16,7 @@ namespace BooksManagementApi.Services
 
             var credentials = _configuration["Imagga:ApiKey"] + ":" + _configuration["Imagga:ApiSecret"];
             request.AddHeader("Authorization", "Basic " + Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(credentials)));
-               
+
             RestResponse response = await client.ExecuteAsync(request);
             JObject jsonResponse = JObject.Parse(response.Content ?? string.Empty);
             JArray? tagsArray = jsonResponse["result"]?["tags"] as JArray;

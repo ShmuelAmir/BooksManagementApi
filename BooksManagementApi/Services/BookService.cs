@@ -9,16 +9,16 @@ namespace BooksManagementApi.Services
 
         public async Task<List<Book>> GetBooksAsync()
         {
-            return await _context.Books.ToListAsync();
+            return await _context.Books.ToListAsync(); // Include("Tags")
         }
 
-        public async Task<Book> GetBookByIsbnAsync(int isbn)
+        public async Task<Book> GetBookByIsbnAsync(int id)
         {
-            var book = await _context.Books.FindAsync(isbn);
+            var book = await _context.Books.FindAsync(id);
 
             if (book == null)
             {
-                throw new ArgumentException("Book with the specified ISBN not found.");
+                throw new ArgumentException("Book with the specified id not found.");
             }
 
             return book;
@@ -31,12 +31,12 @@ namespace BooksManagementApi.Services
             return book;
         }
 
-        public async Task UpdateBookAsync(int isbn, Book book)
+        public async Task UpdateBookAsync(int id, Book book)
         {
-            var dbBook = await _context.Books.FindAsync(isbn);
+            var dbBook = await _context.Books.FindAsync(id);
             if (dbBook == null)
             {
-                throw new ArgumentException("Book with the specified ISBN not found.");
+                throw new ArgumentException("Book with the specified id not found.");
             }
 
             dbBook.ISBN = book.ISBN;
@@ -50,17 +50,16 @@ namespace BooksManagementApi.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteBookAsync(int isbn)
+        public async Task DeleteBookAsync(int id)
         {
-            var book = await _context.Books.FindAsync(isbn);
+            var book = await _context.Books.FindAsync(id);
             if (book == null)
             {
-                throw new ArgumentException("Book with the specified ISBN not found.");
+                throw new ArgumentException("Book with the specified id not found.");
             }
 
             _context.Books.Remove(book);
             await _context.SaveChangesAsync();
         }
     }
-
 }

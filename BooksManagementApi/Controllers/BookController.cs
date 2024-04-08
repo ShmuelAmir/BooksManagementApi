@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
 using BooksManagementApi.Models;
 using BooksManagementApi.Services;
 
@@ -19,12 +18,12 @@ namespace BooksManagementApi.Controllers
             return Ok(books);
         }
 
-        [HttpGet("{isbn}")]
-        public async Task<ActionResult<Book>> GetBook(int isbn)
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<Book>> GetBook(int id)
         {
             try
             {
-                var book = await _service.GetBookByIsbnAsync(isbn);
+                var book = await _service.GetBookByIsbnAsync(id);
                 return Ok(book);
             }
             catch (ArgumentException e)
@@ -39,43 +38,40 @@ namespace BooksManagementApi.Controllers
             try
             {
                 await _service.AddBookAsync(book);
+                return Ok();
             }
             catch (ArgumentException e)
             {
                 return NotFound(e.Message);
             }
-
-            return Ok(await _service.GetBooksAsync());
         }
 
-        [HttpPut("{isbn}")]
-        public async Task<IActionResult> UpdateBook(int isbn, [FromBody] Book book)
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> UpdateBook(int id, [FromBody] Book book)
         {
             try
             {
-                await _service.UpdateBookAsync(isbn, book);
+                await _service.UpdateBookAsync(id, book);
+                return Ok();
             }
             catch (ArgumentException e)
             {
                 return NotFound(e.Message);
             }
-
-            return Ok(await _service.GetBooksAsync());
         }
 
-        [HttpDelete("{isbn}")]
-        public async Task<IActionResult> DeleteBook(int isbn)
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> DeleteBook(int id)
         {
             try
             {
-                await _service.DeleteBookAsync(isbn);
+                await _service.DeleteBookAsync(id);
+                return Ok();
             }
             catch (ArgumentException e)
             {
                 return NotFound(e.Message);
             }
-
-            return Ok(await _service.GetBooksAsync());
         }
     }
 }
