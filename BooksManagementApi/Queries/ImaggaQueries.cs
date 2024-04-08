@@ -1,3 +1,4 @@
+using System.Net;
 using RestSharp;
 using Newtonsoft.Json.Linq;
 using BooksManagementApi.Models;
@@ -18,6 +19,12 @@ namespace BooksManagementApi.Queries
             request.AddHeader("Authorization", "Basic " + Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(credentials)));
 
             RestResponse response = await client.ExecuteAsync(request);
+
+            if (response.StatusCode != HttpStatusCode.OK)
+            {
+                throw new Exception("Error calling Imagga API: " + response.Content);
+            }
+
             JObject jsonResponse = JObject.Parse(response.Content ?? string.Empty);
             JArray? tagsArray = jsonResponse["result"]?["tags"] as JArray;
 

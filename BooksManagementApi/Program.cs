@@ -3,15 +3,6 @@ using BooksManagementApi.Models;
 using BooksManagementApi.Commands;
 using BooksManagementApi.Queries;
 
-// ----Test ImaggaQueries----
-//var imaggaQueries = new ImaggaQueries();
-//var tags = await imaggaQueries.GetTags("https://www.imagga.com/static/images/tagging/wind-farm-538576_640.jpg");
-//foreach (var tag in tags)
-//{
-//    Console.WriteLine($"{tag.Tag} - {tag.Confidence}");
-//}
-// ----/Test ImaggaQueries----
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
