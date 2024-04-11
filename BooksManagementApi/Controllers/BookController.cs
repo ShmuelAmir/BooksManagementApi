@@ -25,7 +25,7 @@ namespace BooksManagementApi.Controllers
         {
             try
             {
-                var book = await _queries.GetBookByIsbnAsync(id);
+                var book = await _queries.GetBookByIdAsync(id);
                 return Ok(book);
             }
             catch (ArgumentException e)

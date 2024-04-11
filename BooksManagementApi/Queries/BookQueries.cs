@@ -9,10 +9,10 @@ namespace BooksManagementApi.Queries
 
         public async Task<List<Book>> GetBooksAsync()
         {
-            return await _context.Books.ToListAsync(); // Include("Tags")
+            return await _context.Books.ToListAsync();
         }
 
-        public async Task<Book> GetBookByIsbnAsync(int id)
+        public async Task<Book> GetBookByIdAsync(int id)
         {
             var book = await _context.Books.FindAsync(id);
 
